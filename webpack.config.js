@@ -58,8 +58,8 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             cacheDirectory: true,
-          }
-        }
+          },
+        },
       },
     ],
   },
