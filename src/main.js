@@ -30,3 +30,59 @@ class Implementation {
     this.name = newName;
   };
 };
+
+class TomatoTimer {
+  constructor({ workTime = 25, shortBreakTime = 5, longBreakTime = 15, tasks = [] } = {}) {
+    this.workTime = workTime;
+    this.shortBreakTime = shortBreakTime;
+    this.longBreakTime = longBreakTime;
+    this.tasks = tasks;
+    this.activeTask = null;
+    this.counter = 0;
+  }
+
+  addTask(task) {
+    this.tasks.push(task);
+  }
+
+  activateTask(taskId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (!task) {
+      console.error(`Task with id ${taskId} not found`);
+      return;
+    }
+    this.activeTask = task;
+  }
+
+  startTask() {
+    if (!this.activeTask) {
+      console.error('No active task');
+      return;
+    }
+    console.log(`Starting task "${this.activeTask.title}" for ${this.workTime} minutes`);
+    setTimeout(() => {
+      console.log(`Task "${this.activeTask.title}" completed`);
+      this.counter++;
+      if (this.counter % 3 === 0) {
+        console.log(`Starting long break for ${this.longBreakTime} minutes`);
+        setTimeout(() => {
+          console.log(`Long break completed`);
+        }, this.longBreakTime * 60 * 1000);
+      } else {
+        console.log(`Starting short break for ${this.shortBreakTime} minutes`);
+        setTimeout(() => {
+          console.log(`Short break completed`);
+        }, this.shortBreakTime * 60 * 1000);
+      }
+    }, this.workTime * 60 * 1000);
+  }
+
+  increaseTaskCounter(taskId) {
+    const task = this.tasks.find((task) => task.id === taskId);
+    if (!task) {
+      console.error(`Task with id ${taskId} not found`);
+      return;
+    }
+    task.counter++;
+  }
+}
